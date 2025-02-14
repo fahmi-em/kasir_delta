@@ -10,7 +10,8 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = "mysql://root:password@103.247.11.162:2083/billb501_deltaprint"
+  url = "mysql://root:password@103.247.11.162:3306/billb501_deltaprint"
+
 }
 
 model customer {

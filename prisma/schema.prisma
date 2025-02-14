@@ -10,7 +10,7 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url = env("DATABASE_URL")
+  url = "mysql://billb501_deltaprint:d3lt44dv!@103.247.11.162:3306/billb501_deltaprint"
 
 }
 

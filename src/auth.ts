@@ -6,6 +6,7 @@ import { toast } from "react-toastify"
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   // adapter: PrismaAdapter(prisma),
+  trustHost: true,
   session: { strategy: 'jwt' },
   pages:{
     signIn: '/login',

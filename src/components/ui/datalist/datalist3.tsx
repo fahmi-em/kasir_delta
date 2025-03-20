@@ -33,6 +33,7 @@ const CustomDatalist: React.FC<CustomDatalistProps> = ({
 
         setFilteredOptions(
             options.filter(option => 
+                option.label.toLowerCase().includes(value.toLowerCase()) || 
                 option.value.toLowerCase().includes(value.toLowerCase())
             )
         );
@@ -43,13 +44,6 @@ const CustomDatalist: React.FC<CustomDatalistProps> = ({
         onSelect(option.label); 
         setShowOptions(false);
     };
-
-    // const clearInput = () => {
-    //     setInputValue('');
-    //     setFilteredOptions(options);
-    //     setShowOptions(false);
-    //     onSelect(''); // Reset nilai yang dipilih
-    // };
 
     return (
         <div className="relative w-full">

@@ -1,22 +1,21 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from 'next/server';
 
-
 export async function GET() {
-    console.log('Fetching customer IDs...');
+    console.log('Fetching customer data...');
     try {
         const customers = await prisma.customer.findMany({
-            select: { nik: true },
-            distinct: ['nik'],
+            select: { nik: true, nama: true },
         });
 
-        console.log('Customer IDs fetched:', customers); // Pastikan data di sini benar
-        return NextResponse.json(customers.map((customer) => customer.nik));
+        console.log('Customer data fetched:', customers);
+        return NextResponse.json(customers);
     } catch (error) {
-        console.error('Error fetching customer IDs:', error);
+        console.error('Error fetching customer data:', error);
         return NextResponse.json(
-            { message: 'Error fetching customer IDs' },
+            { message: 'Error fetching customer data' },
             { status: 500 }
         );
     }
 }
+

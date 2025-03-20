@@ -23,7 +23,7 @@ const EditOrderModal: React.FC<EditOrderModalProps> = ({ onUpdate, onClose, ...p
   const [lebar, setLebar] = useState<number | null>(pesanan.Lebar);
   const [bahanList, setBahanList] = useState([]);
   const [, setSelectedBahan] = useState("");
-  const { theme } = useTheme();
+  const { theme, systemTheme } = useTheme();
 
   // const router = useRouter();
   const isFirstRender = useRef(true);
@@ -107,8 +107,8 @@ const EditOrderModal: React.FC<EditOrderModalProps> = ({ onUpdate, onClose, ...p
     if (!validateInput()) {
       return;
     }
-
-    const themeConfig = theme === 'dark'
+    const currentTheme = theme === 'system' ? systemTheme : theme;
+    const themeConfig = currentTheme === 'dark'
     ? {
       background: '#0F0E0E',
       color: '#fff',

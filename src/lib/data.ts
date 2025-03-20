@@ -106,6 +106,9 @@ export const getOrders = async (
           },
         },
       },
+      orderBy: {
+        date: 'desc', // Mengurutkan dari tanggal terbaru ke lama
+      },
     });
 
     const uniqueOrders = orders.reduce((acc: any[], current) => {
@@ -163,6 +166,9 @@ export const getOrdersPage = async (
             }
             : {},
         ],
+      },
+      orderBy: {
+        date: 'desc', // Mengurutkan dari tanggal terbaru ke lama
       },
     });
 

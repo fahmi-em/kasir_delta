@@ -1,8 +1,8 @@
-import {prisma} from "@/lib/prisma";
+import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-    try{
+    try {
         const orders = await prisma.pesanan.findMany({
             select: {
                 date: true,
@@ -10,12 +10,24 @@ export async function GET() {
                 id_pengenal: true
             }
         });
-        return NextResponse.json(orders.map((pesanan) => ({
-            date: pesanan.date,
-            total_harga: pesanan.total_harga,
-            id_pengenal: pesanan.id_pengenal
-        })));
-    }catch{
+
+        const uniqueOrders = orders.reduce((acc, pesanan) => {
+            const key = `${pesanan.date}-${pesanan.id_pengenal}`;
+
+            if (!acc.has(key)) {
+                acc.set(key, {
+                    date: pesanan.date,
+                    total_harga: pesanan.total_harga,
+                    id_pengenal: pesanan.id_pengenal
+                });
+            }
+
+            return acc;
+        }, new Map());
+
+        return NextResponse.json(Array.from(uniqueOrders.values()));
+
+    } catch {
         return NextResponse.json(
             { message: 'Error fetching orders' },
             { status: 500 }

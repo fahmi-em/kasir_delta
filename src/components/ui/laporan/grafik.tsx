@@ -71,14 +71,14 @@ export function Component() {
 
             <Card>
                 <CardHeader>
-                    <div className="grid grid-cols-2 gap-14">
+                    <div className="flex justify-between items-center mb-4">
                         <div>
                             <CardTitle>Laporan Order</CardTitle>
                             <CardDescription>January - December {selectedYear}</CardDescription>
                         </div>
-                        <div className="text-sm mb-4 w-40 px-2 py-1 rounded-md flex ml-auto">
+                        <div className="text-sm w-40 px-2 py-1 rounded-md">
                             <Select onValueChange={handleYearChange} value={selectedYear}>
-                                <SelectTrigger className="w-[180px]">
+                                <SelectTrigger className="w-[150px]">
                                     <SelectValue placeholder="Select a year" />
                                 </SelectTrigger>
                                 <SelectContent>

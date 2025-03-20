@@ -27,6 +27,8 @@ export function OrderDetailChart() {
         const response = await fetch('/api/getChartDataOrder');
         const text = await response.text();
         const data = JSON.parse(text);
+        console.log("Raw API Data:", data);
+
 
         const formattedData = data.reduce((acc: { year: string; Orders: number }[], item: { year: string; id_pengenal: string }) => {
           const existingYear = acc.find((entry) => entry.year === item.year.toString());

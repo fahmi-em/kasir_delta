@@ -4,7 +4,7 @@ import { DeletePending, SubmitButton, DeleteList } from '@/components/ui/buttonf
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "../card";
 import { OrderSatuan } from "@/types/order";
 import { useState, useEffect } from 'react';
-import DataList from '@/components/ui/datalist/datalist';
+import DataList from '@/components/ui/datalist/datalist5';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -20,7 +20,7 @@ const generateIdPengenal = (lastId: string) => {
 const FormOrder: React.FC<FormOrderProps> = ({
     order
 }) => {
-    const [customerIds, setCustomerIds] = useState([]);
+    const [customerIds, setCustomerIds] = useState<{ nama: string; nik: string }[]>([]);
     const [orders, setOrders] = useState(order);
     const [idPengenal, setIdPengenal] = useState<string>('P0001');
     const [customerId, setCustomerId] = useState<string>('');
@@ -34,6 +34,7 @@ const FormOrder: React.FC<FormOrderProps> = ({
                 }
                 const data = await response.json();
                 setCustomerIds(data);
+                console.log('Customer IDs:', data);
             } catch (error) {
                 console.error('Error fetching customer IDs:', error);
             }
@@ -128,7 +129,10 @@ const FormOrder: React.FC<FormOrderProps> = ({
             setCustomerId('');
             setCustomerIds([]);
 
-            toast.success("Order berhasil ditambahkan!", { autoClose: 1000, onClose: () => window.location.reload() });
+            toast.success("Order berhasil ditambahkan!", {
+                autoClose: 1000,
+                onClose: () => window.location.href = '/view-order'
+            });
 
         } catch (error) {
             console.error('Error submitting order:', error);
@@ -163,10 +167,14 @@ const FormOrder: React.FC<FormOrderProps> = ({
                             <div>
                                 <label className="block text-sm font-medium dark:text-white mb-1">Customer</label>
                                 <DataList
-                                    options={customerIds}
-                                    placeholder="Select a customer"
-                                    onSelect={handleCustomerSelect}
+                                    options={customerIds.map(customer => ({
+                                        label: customer.nama, // Tampilkan hanya nama
+                                        value: customer.nik   // Simpan hanya NIK
+                                    }))}
+                                    placeholder="Pilih customer"
+                                    onSelect={handleCustomerSelect} // Akan mengirim hanya NIK
                                 />
+
                             </div>
                         </div>
 
@@ -236,7 +244,7 @@ const FormOrder: React.FC<FormOrderProps> = ({
                         </div>
                     </form>
                 </CardContent>
-  
+
             </Card>
         </div>
     );

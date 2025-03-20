@@ -11,6 +11,7 @@ import ModalEdit from "./modalwithedit"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../table";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "../select";
 import { Skeleton } from "../skeleton";
+import { ArrowUpDown } from "lucide-react";
 
 interface OrderTableProps {
   query: string;
@@ -51,6 +52,8 @@ const OrderTable: React.FC<OrderTableProps> = ({
   const [orderList, setOrderList] = useState<OrderWithDetails[]>(initialOrders);
   const [query,] = useState(searchParams.get("query") || "");
   const [loading, setLoading] = useState(true);
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+
 
   const handleModalToggle = (id_pengenal: string) => {
     console.log("id", id_pengenal);
@@ -74,12 +77,15 @@ const OrderTable: React.FC<OrderTableProps> = ({
 
   useEffect(() => {
     setLoading(true);
-    const filteredOrders = initialOrders.filter(order =>
-      order.customer_name.toLowerCase().includes(query.toLowerCase())
-    );
+    const filteredOrders = initialOrders
+      .filter(order =>
+        order.customer_name.toLowerCase().includes(query.toLowerCase())
+      )
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
     setOrderList(filteredOrders);
     setLoading(false);
   }, [query, initialOrders]);
+
 
   const handleEntriesChange = (entries: number) => {
     setEntries(entries);
@@ -101,6 +107,20 @@ const OrderTable: React.FC<OrderTableProps> = ({
       )
     );
   };
+
+  const handleSortByDate = () => {
+    const newOrder = sortOrder === "asc" ? "desc" : "asc";
+    setSortOrder(newOrder);
+
+    const sortedOrders = [...orderList].sort((a, b) => {
+      const dateA = new Date(a.date).getTime();
+      const dateB = new Date(b.date).getTime();
+      return newOrder === "asc" ? dateA - dateB : dateB - dateA;
+    });
+
+    setOrderList(sortedOrders);
+  };
+
 
   return (
     <div className="md:p-0 p-2 mr-4">
@@ -137,7 +157,10 @@ const OrderTable: React.FC<OrderTableProps> = ({
               <TableRow>
                 <TableHead>No</TableHead>
                 <TableHead>ID</TableHead>
-                <TableHead>Tanggal</TableHead>
+                <TableHead onClick={handleSortByDate} className="cursor-pointer flex items-center space-x-1">
+                  <span>Tanggal</span>
+                  <ArrowUpDown size={16} />
+                </TableHead>
                 <TableHead>Nama Customer</TableHead>
                 <TableHead className="text-center">Total Harga</TableHead>
                 <TableHead className="text-center">Aksi</TableHead>

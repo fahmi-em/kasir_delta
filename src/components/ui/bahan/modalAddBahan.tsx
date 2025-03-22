@@ -27,7 +27,7 @@ export default function inputBahan() {
 
     useEffect(() => {
         if (jenisBahan === 'MMT') {
-            setSatuan('Meter');
+            setSatuan('Centimeter');
         } else if (jenisBahan === 'Kertas') {
             setSatuan('Lembar');
         } else {

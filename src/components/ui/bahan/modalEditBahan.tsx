@@ -128,7 +128,7 @@ export default function EditBahan(bahan: Bahan) {
                           const newJenis = e.target.value;
                           setJenis(newJenis);
                           if (newJenis === "MMT") {
-                            setSatuan("Meter");
+                            setSatuan("Centimeter");
                           } else if (newJenis === "Kertas") {
                             setSatuan("Lembar");
                           } else {

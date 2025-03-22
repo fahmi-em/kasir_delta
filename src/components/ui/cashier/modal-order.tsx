@@ -53,7 +53,6 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, id_pengenal }) => {
                         throw new Error('Failed to fetch order details');
                     }
                     const data = await response.json();
-                    console.log("API Response:", data);
                     setOrderDetails(data.orders);
                 } catch (err) {
                     if (err instanceof Error) {
@@ -117,7 +116,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, id_pengenal }) => {
                                             <TableCell>{order.jumlah} unit</TableCell>
                                             <TableCell>
                                                 {order.jenis.toLowerCase() === "mmt"
-                                                    ? `${order.Panjang} x ${order.Lebar} meter`
+                                                    ? `${order.Panjang} x ${order.Lebar} cm`
                                                     : order.ukuran || "-"}
                                             </TableCell>
                                             <TableCell>{formatCurrency(order.total_harga)}</TableCell>

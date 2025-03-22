@@ -207,7 +207,7 @@ const FormOrder: React.FC<FormOrderProps> = ({
                                             <td className="py-2 px-4 border-b text-right dark:text-white">{order.jumlah}</td>
                                             <td className="py-2 px-4 border-b text-right dark:text-white">
                                                 {order.jenis.toLowerCase() === "mmt"
-                                                    ? `${order.panjang} x ${order.lebar} meter`
+                                                    ? `${order.panjang} x ${order.lebar} cm`
                                                     : order.ukuran || "-"}
                                             </td>
                                             <td className="py-2 px-4 border-b text-right dark:text-white">{order.total_harga}</td>

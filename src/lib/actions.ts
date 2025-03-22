@@ -21,13 +21,11 @@ const CustomerSchema = z.object({
 
 export const addCust = async (prevState: any, formData: FormData) => {
   const validateFields = CustomerSchema.safeParse(Object.fromEntries(formData.entries()));
-  console.log("form data:", formData)
   if (!validateFields.success) {
     return {
       Error: validateFields.error.flatten().fieldErrors
     }
   }
-  console.log("Data yang dikirim ke Prisma: ", validateFields.data);
   try {
     await prisma.customer.create({
       data: {
@@ -82,11 +80,9 @@ const BahanSchema = z.object({
 
 export const addOrder = async (prevState: any, formData: FormData) => {
   const formObject = Object.fromEntries(formData.entries());
-  console.log("addOrder called with:", Object.fromEntries(formData.entries())); // Log awal
 
   const validateFields = BahanSchema.safeParse(formObject);
   if (!validateFields.success) {
-    console.log("Validation Errors:", validateFields.error.flatten().fieldErrors);
     return { Error: validateFields.error.flatten().fieldErrors };
   }
 
@@ -103,7 +99,7 @@ export const addOrder = async (prevState: any, formData: FormData) => {
   
   let total_harga = 0;
   if (jenis === "MMT") {
-    total_harga = panjangValue * lebarValue * jumlahValue *harga_bahan;
+    total_harga = (panjangValue/100) * (lebarValue/100) * jumlahValue *harga_bahan;
   } else {
     total_harga = jumlahValue * harga_bahan;
   }

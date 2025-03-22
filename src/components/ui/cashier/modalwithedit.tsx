@@ -54,7 +54,6 @@ const Modal: React.FC<ModalProps> = ({ session, isOpen, onClose, id_pengenal }) 
                         throw new Error('Failed to fetch order details');
                     }
                     const data = await response.json();
-                    console.log("API Response:", data);
                     setOrderDetails(data.orders);
                 } catch (err) {
                     if (err instanceof Error) {
@@ -93,7 +92,7 @@ const Modal: React.FC<ModalProps> = ({ session, isOpen, onClose, id_pengenal }) 
 
             const newTotalHarga = updatedOrders.reduce((acc, order) => {
                 if (order.jenis === "MMT") {
-                    return acc + (order.jumlah * (order.Panjang ?? 1) * (order.Lebar ?? 1) * order.harga_bahan);
+                   return acc + (order.jumlah * ((order.Panjang ?? 1) / 100) * ((order.Lebar ?? 1) / 100) * order.harga_bahan);
                 } else {
                     return acc + (order.jumlah * order.harga_bahan);
                 }
@@ -172,7 +171,7 @@ const Modal: React.FC<ModalProps> = ({ session, isOpen, onClose, id_pengenal }) 
                                                 <TableCell>{order.jumlah} unit</TableCell>
                                                 <TableCell>
                                                     {order.jenis.toLowerCase() === "mmt"
-                                                        ? `${order.Panjang} x ${order.Lebar} meter`
+                                                        ? `${order.Panjang} x ${order.Lebar} cm`
                                                         : order.ukuran || "-"}
                                                 </TableCell>
                                                 <TableCell>{formatCurrency(order.total_harga)}</TableCell>

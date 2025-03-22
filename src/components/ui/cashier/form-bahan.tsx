@@ -24,13 +24,11 @@ export default function FormBahan() {
             }
             try {
                 const response = await fetch(`/api/getBahan?jenis=${encodeURIComponent(jenisBahan)}`);
-                console.log("jenisBahan:", jenisBahan);
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 const data = await response.json();
                 setBahanList(data);
-                console.log("data:", data);
             } catch (error) {
                 console.error("Error fetching bahan:", error);
             }
@@ -55,7 +53,6 @@ export default function FormBahan() {
         if (bahan) {
             try {
                 const response = await fetch(`/api/getBahanDetails?nama_bahan=${encodeURIComponent(bahan)}`);
-                console.log("bahan:", bahan);
                 if (!response.ok) {
                     throw new Error(`Error fetching saran harga: ${response.statusText}`);
                 }
@@ -63,13 +60,10 @@ export default function FormBahan() {
                 console.log("data:", data);
                 if (data && data[0]?.harga) {
                     setSaranHarga(data[0].harga);
-                    console.log("Saran harga ditemukan:", data[0].harga);
                 } else {
-                    console.error("Harga tidak ditemukan dalam data:", data);
                     setSaranHarga("");
                 }
             } catch (error) {
-                console.error("Error fetching saran harga:", error);
                 setSaranHarga("");
             }
         } else {
@@ -82,7 +76,6 @@ export default function FormBahan() {
         e.preventDefault();
         e.stopPropagation();
         const formData = new FormData(e.target as HTMLFormElement);
-        console.log("Submitting form with data:", Object.fromEntries(formData.entries()));
 
         if (!formData.get("jenis")) {
             toast.error("Pilih jenis terlebih dahulu!", { autoClose: 1000 });
@@ -198,11 +191,11 @@ export default function FormBahan() {
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
                                     <label htmlFor="Panjang" className='block text-sm font-medium text-black-700 mb-1'>Panjang</label>
-                                    <input type="number" name="panjang" placeholder="meter" className="w-full border border-gray-300  rounded-md p-3 bg-white text-left text-gray-800 focus:outline-none dark:bg-[#1a1a1a] dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 mb-4" />
+                                    <input type="number" name="panjang" placeholder="cm" className="w-full border border-gray-300  rounded-md p-3 bg-white text-left text-gray-800 focus:outline-none dark:bg-[#1a1a1a] dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 mb-4" />
                                 </div>
                                 <div>
                                     <label htmlFor="Lebar" className='block text-sm font-medium text-black-700 mb-1'>Lebar</label>
-                                    <input type="number" name="lebar" placeholder="meter" className="w-full border border-gray-300  rounded-md p-3 bg-white text-left text-gray-800 focus:outline-none dark:bg-[#1a1a1a] dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 mb-4" />
+                                    <input type="number" name="lebar" placeholder="cm" className="w-full border border-gray-300  rounded-md p-3 bg-white text-left text-gray-800 focus:outline-none dark:bg-[#1a1a1a] dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 mb-4" />
                                 </div>
                             </div>
                         )}

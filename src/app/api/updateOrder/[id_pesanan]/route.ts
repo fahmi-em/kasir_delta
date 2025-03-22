@@ -38,7 +38,7 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id_p
     }
 
     if (jenis === "MMT" && Panjang && Lebar) {
-      updateData.total_harga = Panjang * Lebar * jumlah * harga_bahan;
+      updateData.total_harga = (Panjang / 100) * (Lebar / 100) * jumlah * harga_bahan;
     } else {
       updateData.total_harga = jumlah * harga_bahan;
     }

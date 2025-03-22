@@ -115,7 +115,7 @@ const Invoice: React.FC<InvoiceProps> = ({ id_pengenal }) => {
                                     <td className="py-2 px-2 text-right text-gray-600">{order.jumlah}</td>
                                     <td className="py-2 px-2 text-right text-gray-600">
                                         {order.jenis.toLowerCase() === "mmt"
-                                            ? `${order.Panjang} x ${order.Lebar} meter`
+                                            ? `${order.Panjang} x ${order.Lebar} cm`
                                             : order.ukuran || "-"}
                                     </td>
                                     <td className="py-2 px-2 text-right text-gray-600">{formatRupiah(order.total_harga)}</td>
